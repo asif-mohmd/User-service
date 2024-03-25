@@ -55,7 +55,9 @@ const grpcServer = () =>{
 }
 
     server.addService((userProto.UserService as any).service, {
+
         Register : controller.onRegister.bind(controller),
+        
         
         // Implementation of service methods
     });

@@ -7,7 +7,7 @@ import { User } from "../model/user.entities";
 export class UserRepository implements IUserRepository{
 
     register(userData: User): Promise<IUser | null> {
-        console.log("repository........................")
+        console.log(userData,"repository........................")
         try {
           return UserModel.create(userData);
         } catch (e: any) {
