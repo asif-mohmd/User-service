@@ -7,6 +7,7 @@ import { User } from "../model/user.entities";
 export class UserRepository implements IUserRepository{
 
     register(userData: User): Promise<IUser | null> {
+        console.log("repository........................")
         try {
           return UserModel.create(userData);
         } catch (e: any) {
@@ -14,9 +15,16 @@ export class UserRepository implements IUserRepository{
         }
       }
 
-      
-    findOne(email: string): Promise<IUser | null> {
-        throw new Error("Method not implemented.");
+
+    async findOne(email: string): Promise<IUser | null> {
+        try{
+            console.log("find one method")
+            const user = await UserModel.findOne({email});
+            console.log(user,"user")
+            return user;
+        } catch (e: any) {
+            throw new Error("db error");
+        }
     }
     findById(id: string): Promise<IUser | null> {
         throw new Error("Method not implemented.");

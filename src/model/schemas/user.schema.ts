@@ -92,15 +92,15 @@ userSchema.pre<IUser>("save", async function (next) {
 //   };
 
   // sign refresh token
-userSchema.methods.SignRefreshToken = function () {
-    return jwt.sign(
-      { id: this._id, role: this.role },
-      process.env.REFRESH_TOKEN || "",
-      {
-        expiresIn: "3d",
-      }
-    );
-  };
+// userSchema.methods.SignRefreshToken = function () {
+//     return jwt.sign(
+//       { id: this._id, role: this.role },
+//       process.env.REFRESH_TOKEN || "",
+//       {
+//         expiresIn: "3d",
+//       }
+//     );
+//   };
   
   // compare password
   userSchema.methods.comparePassword = async function (enteredPassword: string) {

@@ -17,6 +17,7 @@ export class UserService implements IUserService{
 
     async userRegister(userData: User) {
         try{
+            console.log("serviceeeeeeeeeeeeeeeeeeeeeeeee")
             const isEmailExist = await this.repository.findOne(userData.email)
 
             if(isEmailExist){
@@ -24,6 +25,10 @@ export class UserService implements IUserService{
                     throw new Error("upload avatar")
                 }
             }
+            console.log("after email")
+
+            const user = await this.repository.register(userData);
+            return {user}
 
         }catch(err){
             console.log(err,"errrr user regisssssss")

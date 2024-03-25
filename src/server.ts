@@ -5,8 +5,13 @@ import path from "path"
 import { UserController } from "./controllers/userController";
 import { UserService } from "./service/user.service";
 import { UserRepository } from "./repository/UserRepository";
+import { connectDB } from "./config/mongodb/db";
 
 dotenv.config();
+
+
+connectDB()
+
 
 interface UserData {
     name: string;
@@ -19,7 +24,7 @@ interface UserData {
 const port = process.env.PORT || 3001;
 
 
-const packageDefinition = protoLoader.loadSync(path.join(__dirname,"../protos/user.proto"),
+const packageDefinition = protoLoader.loadSync(path.join(__dirname,"/protos/user.proto"),
     {keepCase: true,
      longs: String,
      enums: String,
@@ -50,16 +55,9 @@ const grpcServer = () =>{
 }
 
     server.addService((userProto.UserService as any).service, {
-        Register : controller.onRegister.bind(controll),
+        Register : controller.onRegister.bind(controller),
         
         // Implementation of service methods
     });
 grpcServer();
 
-
-// Register: (call:any, callback:any) => {
-//     const userData: UserData = call.request;
-//     console.log("lllllllllllllllll")
-//     console.log(userData,"calllllllllllllllllllllllllllllll datta")
-//     callback(null);
-// }
