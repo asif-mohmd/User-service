@@ -16,12 +16,77 @@ export class UserController {
         password: string;
       };
       const response = await this.service.userRegister(request);
-      console.log(response.user.name, "-----------------------------");
-      let res = response.user.name;
+      console.log( "-----------------------------",response);
+      if(response.registerStatus){
+        
+        callback(null, {
+            msg: "OTP send",
+            registerStatus: true,
+            userData :response.activationToken
+             // Set status to 200 for successful registration
+           
+          });
+      }else{
+        callback(null, {
+            msg: "Auth error",
+            registerStatus: false, // Set status to 200 for successful registration
+           
+          });
+      }
+     
+    } catch (error) {
+      // Handle errors appropriately
+      callback(error); // Pass the error to the callback
+    }
+  };
+
+  onActivateUser: any = async (call:any, callback:any) =>{
+    try{
+        console.log("on activate",call.request,"-----------")
+
+        const request = call.request as {
+            name:string;
+            email:string;
+            password:string;
+        }
+        const response = await this.service.activateUser(request);
+        console.log(response,"-----------------")
+        if(response){
+          callback(null,{
+            status:true
+          })
+        }else{
+          callback(null,{
+            status:false
+          })
+        }
+       
+
+    }catch(err){
+        callback(err);
+    }
+  }
+
+
+
+
+  onLogin: any = async (call: any, callback: any) => {
+    try {
+      console.log("controller call");
+      const {email,password} = call.request as {
+        email: string;
+        password: string;
+      };
+      const response = await this.service.userLogin(email,password);
+  
       callback(null, {
-        msg: "registered",
-        status: 200, // Set status to 200 for successful registration
-        data: res,
+        
+        msg: response.msg,
+        status: response.status, 
+        otp:response.otp,
+        loginStatus:response.loginStatus
+        // Set status to 200 for successful registration
+
       });
     } catch (error) {
       // Handle errors appropriately
@@ -32,5 +97,5 @@ export class UserController {
   
 
 
-
+  
 }

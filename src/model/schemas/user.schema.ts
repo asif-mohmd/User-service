@@ -2,7 +2,6 @@ import mongoose,{Document,Model,Schema} from "mongoose"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-import { UserRole } from "../user.entities"
 
 const emailRegex:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -14,7 +13,7 @@ export interface IUser extends Document {
       public_id: string;
       url: string;
     };
-    role: UserRole;
+    role: "User";
     isVerified: boolean;
     courses: Array<{ courseId: string }>;
     comparePassword: (password: string) => Promise<boolean>;
@@ -45,16 +44,6 @@ export interface IUser extends Document {
         type: String,
       },
   
-      avatar: {
-        type: String,
-      },
-  
-      role: {
-        type: String,
-        enum: ["user", "admin", "instructor"],
-        default: UserRole.User,
-      },
-  
       isVerified: {
         type: Boolean,
         default: false,
@@ -81,26 +70,26 @@ userSchema.pre<IUser>("save", async function (next) {
   });
 
   // sign access token
-// userSchema.methods.SignAccessToken = function () {
-//     return jwt.sign(
-//       { id: this._id, role: this.role },
-//       process.env.ACCESS_TOKEN || "",
-//       {
-//         expiresIn: "5m",
-//       }
-//     );
-//   };
+userSchema.methods.SignAccessToken = function () {
+    return jwt.sign(
+      { id: this._id, role: this.role },
+      process.env.ACCESS_TOKEN || "",
+      {
+        expiresIn: "5m",
+      }
+    );
+  };
 
   // sign refresh token
-// userSchema.methods.SignRefreshToken = function () {
-//     return jwt.sign(
-//       { id: this._id, role: this.role },
-//       process.env.REFRESH_TOKEN || "",
-//       {
-//         expiresIn: "3d",
-//       }
-//     );
-//   };
+userSchema.methods.SignRefreshToken = function () {
+    return jwt.sign(
+      { id: this._id, role: this.role },
+      process.env.REFRESH_TOKEN || "",
+      {
+        expiresIn: "3d",
+      }
+    );
+  };
   
   // compare password
   userSchema.methods.comparePassword = async function (enteredPassword: string) {

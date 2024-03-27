@@ -7,7 +7,7 @@ export interface IUserService {
       password?: string;
       avatar?: string;
     }): any;
-    activateUser(data: { token: string; activationCode: string }): any;
+    activateUser(userData: { name: string; email: string; password: string ; }): any;
     getUser(id: string): Promise<User | any>;
     userLogin(email: string, password: string): any;
     updateUserInfo(id: string, name: string): any;

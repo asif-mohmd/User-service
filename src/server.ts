@@ -8,18 +8,7 @@ import { UserRepository } from "./repository/UserRepository";
 import { connectDB } from "./config/mongodb/db";
 
 dotenv.config();
-
-
 connectDB()
-
-
-interface UserData {
-    name: string;
-    email: string;
-    password: string;
-    avatar: string;
-    role: string;
-}
 
 const port = process.env.PORT || 3001;
 
@@ -57,7 +46,8 @@ const grpcServer = () =>{
     server.addService((userProto.UserService as any).service, {
 
         Register : controller.onRegister.bind(controller),
-        
+        Login : controller.onLogin.bind(controller),
+        ActivateUser : controller.onActivateUser.bind(controller)
         
         // Implementation of service methods
     });
