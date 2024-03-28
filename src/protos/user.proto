@@ -40,7 +40,6 @@ message ActivateResponse{
 
 message Token {
     string token = 1;
-  
 }
 
 
