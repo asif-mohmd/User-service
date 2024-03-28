@@ -6,6 +6,19 @@ import { User } from "../model/user.entities";
 
 export class UserRepository implements IUserRepository{
 
+
+    async updateOne(email: string, password: string): Promise<any> {
+        try {
+            const result = await UserModel.updateOne({ email: email }, { $set: { password: password } });
+            console.log(result,"updateddddddddddddddddddddd")
+            return result;
+        } catch (error) {
+            throw new Error("Error updating password");
+        }
+    }
+
+    
+
     register(userData: User): Promise<IUser | null> {
         console.log(userData,"repository........................")
         try {

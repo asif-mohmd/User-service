@@ -7,6 +7,40 @@ export class UserController {
     this.service = service;
   }
 
+  onPasswordUpdate: any = async(call:any, callback: any) =>{
+    try{
+
+      console.log("contoll forgot password");
+
+      const request = call.request as {
+        email: string;
+        password: string;
+      };
+
+      const response = await this.service.passwordUpdate(
+        request.email,
+        request.password
+      );
+
+      console.log("update apss res posne:",response)
+if(response){
+  console.log("controll pass updtaet")
+  callback(null,{
+    passwordUpdate : true
+  })
+}else{
+  callback(null,{
+    passwordUpdate : false
+  })
+}
+      
+
+    }catch(err){
+
+    }
+
+  }
+
   onForgotPassword: any = async (call: any, callback: any) => {
     try {
       console.log("contoll forgot password");
@@ -25,7 +59,7 @@ export class UserController {
       if (response.forgotPasswordStatus) {
         console.log(response.activationToken, "===========================");
         callback(null, {
-          registerStatus: true,
+          forgotPasswordStatus: true,
           forgotData: response.activationToken,
         });
       } else {

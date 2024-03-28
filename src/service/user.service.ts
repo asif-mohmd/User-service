@@ -14,17 +14,27 @@ export class UserService implements IUserService {
     this.repository = repository;
   }
 
+  async passwordUpdate(email: string, password: string) {
+    try {
+      console.log(email, "serviceeeeeeeeeeeeeeeeeeeeeeeee");
+      const passwordUpdate = await this.repository.updateOne(email, password);
+      if (passwordUpdate) {
+        console.log(passwordUpdate);
+        console.log("passupdate here");
+        return true;
+      }
+    } catch (err) {}
+  }
   async forgotPassword(email: string, password: string) {
-
-    try{
+    try {
       console.log(email, "serviceeeeeeeeeeeeeeeeeeeeeeeee");
       const isEmailExist = await this.repository.findOne(email);
 
       if (isEmailExist) {
         let forgotPasswordStatus = true;
         let email = isEmailExist.email;
-        let password = isEmailExist.password
-        let userData = {forgotPasswordStatus,email ,password}
+        let password = isEmailExist.password;
+        let userData = { forgotPasswordStatus, email, password };
 
         let activationToken = generateToken(userData);
         let options = {
@@ -33,20 +43,15 @@ export class UserService implements IUserService {
         };
         sendMail(options);
 
-        console.log("0000000000000",activationToken)
+        console.log("0000000000000", activationToken);
 
-
-
-        return {forgotPasswordStatus,activationToken};
+        return { forgotPasswordStatus, activationToken };
       }
-      let forgotPasswordStatus = false
-      return forgotPasswordStatus
-
-
-    }catch (err) {
+      let forgotPasswordStatus = false;
+      return forgotPasswordStatus;
+    } catch (err) {
       console.log(err, "errrr user forgot");
     }
-
   }
 
   async userRegister(userData: User) {

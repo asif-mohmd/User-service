@@ -19,4 +19,5 @@ export interface IUserService {
     ): any;
     updatePassword(oldPassword: string, newPassword: string, userId: string): any;
     forgotPassword(email:string, password:string):any;
+    passwordUpdate(email:string, password:string):any;
   }
