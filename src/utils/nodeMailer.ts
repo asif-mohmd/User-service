@@ -2,14 +2,13 @@ import nodemailer from "nodemailer";
 
 interface EmailOptions {
   email: string;
-  name: string;
   otp: string;
 }
 
 export const sendMail = async (options: EmailOptions) => {
   console.log(options, "opt------------------------------------");
 
-  const { email, name, otp } = options;
+  const { email, otp } = options;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
