@@ -1,7 +1,7 @@
 import { error } from "console";
-import { IUserService } from "../interfaces/IUserInterface";
+import { IUserService } from "../interfaces/IUserController";
 import { IUserRepository } from "../interfaces/IUserRepository";
-import { User } from "../model/user.entities";
+import { User } from "../entities/user.entities";
 import { generateToken } from "../utils/generateToken";
 import { IUser } from "../model/schemas/user.schema";
 import { response } from "express";
@@ -25,6 +25,9 @@ export class UserService implements IUserService {
       }
     } catch (err) {}
   }
+
+
+  
   async forgotPassword(email: string, password: string) {
     try {
       console.log(email, "serviceeeeeeeeeeeeeeeeeeeeeeeee");

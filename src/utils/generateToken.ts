@@ -1,5 +1,5 @@
 import jwt,{ Secret } from "jsonwebtoken";
-import { User } from "../model/user.entities";
+import { User } from "../entities/user.entities";
 import "dotenv/config";
 
 

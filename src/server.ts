@@ -3,14 +3,12 @@ import * as grpc from "@grpc/grpc-js"
 import * as protoLoader from "@grpc/proto-loader"
 import path from "path"
 import { UserController } from "./controllers/userController";
-import { UserService } from "./service/user.service";
+import { UserService } from "./interactor/user.service";
 import { UserRepository } from "./repository/UserRepository";
 import { connectDB } from "./config/mongodb/db";
 
 dotenv.config();
 connectDB()
-
-const port = process.env.PORT || 3001;
 
 
 const packageDefinition = protoLoader.loadSync(path.join(__dirname,"/protos/user.proto"),

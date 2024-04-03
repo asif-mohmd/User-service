@@ -1,4 +1,4 @@
-import { IUserService } from "../interfaces/IUserInterface";
+import { IUserService } from "../interfaces/IUserController";
 
 export class UserController {
   private service: IUserService;
@@ -7,11 +7,8 @@ export class UserController {
     this.service = service;
   }
 
-  onPasswordUpdate: any = async(call:any, callback: any) =>{
-    try{
-
-      console.log("contoll forgot password");
-
+  onPasswordUpdate: any = async (call: any, callback: any) => {
+    try {
       const request = call.request as {
         email: string;
         password: string;
@@ -22,24 +19,18 @@ export class UserController {
         request.password
       );
 
-      console.log("update apss res posne:",response)
-if(response){
-  console.log("controll pass updtaet")
-  callback(null,{
-    passwordUpdate : true
-  })
-}else{
-  callback(null,{
-    passwordUpdate : false
-  })
-}
-      
-
-    }catch(err){
-
-    }
-
-  }
+      if (response) {
+        console.log("controll pass updtaet");
+        callback(null, {
+          passwordUpdate: true,
+        });
+      } else {
+        callback(null, {
+          passwordUpdate: false,
+        });
+      }
+    } catch (err) {}
+  };
 
   onForgotPassword: any = async (call: any, callback: any) => {
     try {
@@ -102,22 +93,19 @@ if(response){
 
   onActivateUser: any = async (call: any, callback: any) => {
     try {
-      console.log("on activate", call.request, "-----------");
-
       const request = call.request as {
         name: string;
         email: string;
         password: string;
       };
       const response = await this.service.activateUser(request);
-      console.log(response, "-----------------");
+
       if (response) {
-        console.group("res sett");
+
         callback(null, {
           status: true,
         });
       } else {
-        console.log("222222222222222");
         callback(null, {
           status: false,
         });
@@ -129,7 +117,6 @@ if(response){
 
   onLogin: any = async (call: any, callback: any) => {
     try {
-      console.log("controller call");
       const { email, password } = call.request as {
         email: string;
         password: string;

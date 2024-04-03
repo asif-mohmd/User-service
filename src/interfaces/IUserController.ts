@@ -1,4 +1,4 @@
-import { User } from "../model/user.entities";
+import { User } from "../entities/user.entities";
 
 export interface IUserService {
     userRegister(userData: {
@@ -20,4 +20,4 @@ export interface IUserService {
     updatePassword(oldPassword: string, newPassword: string, userId: string): any;
     forgotPassword(email:string, password:string):any;
     passwordUpdate(email:string, password:string):any;
-  }
+  } 

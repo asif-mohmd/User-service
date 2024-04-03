@@ -1,6 +1,6 @@
 import { IUserRepository } from "../interfaces/IUserRepository";
 import UserModel,{ IUser } from "../model/schemas/user.schema";
-import { User } from "../model/user.entities";
+import { User } from "../entities/user.entities";
 
 
 
@@ -10,7 +10,6 @@ export class UserRepository implements IUserRepository{
     async updateOne(email: string, password: string): Promise<any> {
         try {
             const result = await UserModel.updateOne({ email: email }, { $set: { password: password } });
-            console.log(result,"updateddddddddddddddddddddd")
             return result;
         } catch (error) {
             throw new Error("Error updating password");
