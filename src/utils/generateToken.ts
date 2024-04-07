@@ -1,5 +1,5 @@
 import jwt,{ Secret } from "jsonwebtoken";
-import { User } from "../entities/user.entities";
+
 import "dotenv/config";
 
 
@@ -10,9 +10,9 @@ interface IActivationToken {
   }
 
   export const generateToken = (userData: Object): IActivationToken => {
-    console.log("gen 1")
+   
     const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
-    console.log("gen 2")
+
 
     const token = jwt.sign(
       {
@@ -24,7 +24,7 @@ interface IActivationToken {
         expiresIn: "5m",
       }
     );
-    console.log("gen 3")
+
 
     return { token, activationCode };
   };

@@ -1,11 +1,13 @@
-import { IUserService } from "../interfaces/IUserController";
+import { IUserInteractor } from "../interfaces/IUserInteractor";
 
 export class UserController {
-  private service: IUserService;
+  private interactor: IUserInteractor;
 
-  constructor(service: IUserService) {
-    this.service = service;
+  constructor(interactor: IUserInteractor) {
+    this.interactor = interactor;
   }
+
+
 
   onPasswordUpdate: any = async (call: any, callback: any) => {
     try {
@@ -13,8 +15,7 @@ export class UserController {
         email: string;
         password: string;
       };
-
-      const response = await this.service.passwordUpdate(
+      const response = await this.interactor.passwordUpdate(
         request.email,
         request.password
       );
@@ -32,23 +33,20 @@ export class UserController {
     } catch (err) {}
   };
 
+
+
   onForgotPassword: any = async (call: any, callback: any) => {
     try {
-      console.log("contoll forgot password");
-
       const request = call.request as {
         email: string;
         password: string;
       };
 
-      const response = await this.service.forgotPassword(
+      const response = await this.interactor.forgotPassword(
         request.email,
         request.password
       );
-      console.log("----------", response);
-      console.log("555555555", response.activatonToken);
       if (response.forgotPasswordStatus) {
-        console.log(response.activationToken, "===========================");
         callback(null, {
           forgotPasswordStatus: true,
           forgotData: response.activationToken,
@@ -63,18 +61,17 @@ export class UserController {
     }
   };
 
+
+
   onRegister: any = async (call: any, callback: any) => {
     try {
-      console.log("controller call");
       const request = call.request as {
         name: string;
         email: string;
         password: string;
       };
-      const response = await this.service.userRegister(request);
-      console.log("-----------registerrr resss------------------", response);
+      const response = await this.interactor.userRegister(request);
       if (response.registerStatus) {
-        console.log(response.activationToken, "===========================");
         callback(null, {
           msg: "OTP send",
           registerStatus: true,
@@ -91,6 +88,8 @@ export class UserController {
     }
   };
 
+
+
   onActivateUser: any = async (call: any, callback: any) => {
     try {
       const request = call.request as {
@@ -98,10 +97,8 @@ export class UserController {
         email: string;
         password: string;
       };
-      const response = await this.service.activateUser(request);
-
+      const response = await this.interactor.activateUser(request);
       if (response) {
-
         callback(null, {
           status: true,
         });
@@ -115,14 +112,16 @@ export class UserController {
     }
   };
 
+
+  
   onLogin: any = async (call: any, callback: any) => {
     try {
       const { email, password } = call.request as {
         email: string;
         password: string;
       };
-      const response = await this.service.userLogin(email, password);
-
+      const response = await this.interactor.userLogin(email, password);
+console.log(response)
       callback(null, {
         msg: response.msg,
         status: response.status,
