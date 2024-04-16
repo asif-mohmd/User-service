@@ -5,7 +5,8 @@ export interface IUserInteractor {
         name: string;
         email: string;
         password?: string;
-        avatar?: string;
+        avatar?: string
+        
       }): any;
       activateUser(userData: {
         name: string;

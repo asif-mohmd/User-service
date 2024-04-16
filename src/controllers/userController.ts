@@ -1,13 +1,23 @@
 import { IUserInteractor } from "../interfaces/IUserInteractor";
 
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+interface LoginResponse {
+  msg: string;
+  status: string;
+  otp: string;
+  loginStatus: boolean;
+}
+
 export class UserController {
   private interactor: IUserInteractor;
 
   constructor(interactor: IUserInteractor) {
     this.interactor = interactor;
   }
-
-
 
   onPasswordUpdate: any = async (call: any, callback: any) => {
     try {
@@ -32,8 +42,6 @@ export class UserController {
       }
     } catch (err) {}
   };
-
-
 
   onForgotPassword: any = async (call: any, callback: any) => {
     try {
@@ -61,8 +69,6 @@ export class UserController {
     }
   };
 
-
-
   onRegister: any = async (call: any, callback: any) => {
     try {
       const request = call.request as {
@@ -88,8 +94,6 @@ export class UserController {
     }
   };
 
-
-
   onActivateUser: any = async (call: any, callback: any) => {
     try {
       const request = call.request as {
@@ -112,16 +116,14 @@ export class UserController {
     }
   };
 
-
-  
   onLogin: any = async (call: any, callback: any) => {
+    console.log(call,"------============----------------------")
     try {
       const { email, password } = call.request as {
         email: string;
         password: string;
       };
       const response = await this.interactor.userLogin(email, password);
-console.log(response)
       callback(null, {
         msg: response.msg,
         status: response.status,
