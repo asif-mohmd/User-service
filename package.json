@@ -2,12 +2,13 @@
   "name": "user-service",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
-  "scripts": {
-    "build": "npx tsc && cp -r node_modules dist/",
-    "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts"
-  },
+ "scripts": {
+  "proto:gen": "echo Generating proto files... && npx proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=proto/ src/protos/*.proto && echo Proto files generated successfully.",
+  "build": "npx tsc",
+  "start": "nodemon --exec ts-node src/server.ts"
+},
+
+  
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -41,6 +42,7 @@
     "ejs": "^3.1.9",
     "express": "^4.19.1",
     "express-session": "^1.18.0",
+    "grpc-tools": "^1.12.4",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.13"
   }

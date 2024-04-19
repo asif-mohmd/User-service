@@ -17,6 +17,8 @@ const packageDefinition = protoLoader.loadSync(
 
 const userProto = grpc.loadPackageDefinition(packageDefinition);
 
+console.log("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[")
+
 const repository = new UserRepository();
 const service = new UserInteractor(repository);
 const controller = new UserController(service);
@@ -43,9 +45,6 @@ server.addService((userProto.UserService as any).service, {
   ActivateUser: controller.onActivateUser.bind(controller),
   ForgotPassword: controller.onForgotPassword.bind(controller),
   PasswordUpdate: controller.onPasswordUpdate.bind(controller),
-  GetAllUsers : controller.onGetAllUsers.bind(controller),
-  UserBlockUnblock : controller.onBlockUnblock.bind(controller)
-
 
   // Implementation of service methods
 });

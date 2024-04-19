@@ -9,4 +9,9 @@ export interface IUserRepository {
   avatarUpdate(id: string, avatar: string): Promise<IUser | null>;
   updatePassword(id: string, password: string): Promise<IUser | null>;
   updateOne: (email: string, password: string) => any
+
+  getUsers():any;
+
+  blockUnblock(userId:string,isVerified:Boolean):Promise<Boolean | any>
+
 }

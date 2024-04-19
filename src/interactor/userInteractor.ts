@@ -6,12 +6,27 @@ import { generateToken } from "../utils/generateToken";
 import { IUser } from "../model/schemas/user.schema";
 
 import { sendMail } from "../utils/nodeMailer";
+import { loginToken } from "../utils/loginToken";
 
 export class UserInteractor implements IUserInteractor {
   private repository: IUserRepository;
 
   constructor(repository: IUserRepository) {
     this.repository = repository;
+  }
+  async blockUnblockUser(userId: string, isVerified: Boolean): Promise<Boolean | void> {
+   try {
+    console.log(isVerified,"7777777777777")
+    const response = await this.repository.blockUnblock(userId,isVerified)
+
+    if(response){
+      return true
+    }else{
+      return false
+    }
+   } catch (error) {
+    
+   }
   }
 
 
@@ -112,7 +127,7 @@ export class UserInteractor implements IUserInteractor {
         throw new Error("Invalid password");
       }
 
-      const activationToken = generateToken(user.id);
+      const activationToken = loginToken(user.id);
       let loginStatus: boolean = true;
       console.log(activationToken,"]]]]]]]]]]]]]]]]]]]]]]")
       const response = { msg: "Login successful", status: 201, activationToken , loginStatus };
@@ -124,6 +139,15 @@ export class UserInteractor implements IUserInteractor {
       return response;
     }
   }
+
+  async getAllUsers(){
+    try {
+        const usersList = await this.repository.getUsers()
+        return usersList
+    } catch (error) {
+        
+    }
+}
 
 
 

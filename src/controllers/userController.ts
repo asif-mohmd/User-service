@@ -127,11 +127,52 @@ export class UserController {
       callback(null, {
         msg: response.msg,
         status: response.status,
-        otp: response.otp,
+        activationToken: response.activationToken,
         loginStatus: response.loginStatus,
       });
     } catch (error) {
       callback(error);
     }
   };
+
+  onGetAllUsers: any = async (call: any, callback: any) => {
+    try {
+      const response = await this.interactor.getAllUsers();
+      console.log(response, "contr resssssssssssssssssssss");
+    
+      if (response && response.length > 0) {
+        const users = response
+    
+        callback(null, { users: users });
+      } else {
+        callback(null, { users: [] }); // Sending an empty array if there are no users
+      }
+    } catch (error) {
+      callback(error);
+    }
+    
+  }
+
+  onBlockUnblock: any = async (call: any, callback: any) => {
+    try {
+      const {id,isVerified} = call.request 
+      console.log(call.request, "0000000000000000000000",isVerified)
+      const response = await this.interactor.blockUnblockUser(id,isVerified);
+      console.log(response, "contr ressssssssssssssssssss");
+    
+      if (response) {
+        
+        callback(null, 
+          {userStatus : true}
+        );
+      } else {
+        callback(null, {userStatus : false}); // Sending an empty array if there are no users
+      }
+    } catch (error) {
+      callback(error);
+    }
+    
+  }
+
+  
 }
