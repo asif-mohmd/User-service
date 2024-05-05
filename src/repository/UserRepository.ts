@@ -61,7 +61,6 @@ export class UserRepository implements IUserRepository {
     async getUsers() {
         try {
             const userList = await UserModel.find()
-            console.log(userList, "user repossssss list")
             return userList
         } catch (error) {
 

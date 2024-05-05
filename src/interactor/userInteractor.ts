@@ -48,13 +48,13 @@ export class UserInteractor implements IUserInteractor {
       const isEmailExist = await this.repository.findOne(email);
 
       if (isEmailExist) {
-        let forgotPasswordStatus = true;
-        let email = isEmailExist.email;
-        let password = isEmailExist.password;
-        let userData = { forgotPasswordStatus, email, password };
+        const forgotPasswordStatus = true;
+        const email = isEmailExist.email;
+        const password = isEmailExist.password;
+        const userData = { forgotPasswordStatus, email, password };
 
-        let activationToken = generateToken(userData);
-        let options = {
+        const activationToken = generateToken(userData);
+        const  options = {
           email: userData.email,
           otp: activationToken.activationCode,
         };
@@ -62,7 +62,7 @@ export class UserInteractor implements IUserInteractor {
 
         return { forgotPasswordStatus, activationToken };
       }
-      let forgotPasswordStatus = false;
+      const forgotPasswordStatus = false;
       return forgotPasswordStatus;
     } catch (err) {
       console.log(err, "errrr user forgot");
@@ -76,13 +76,13 @@ export class UserInteractor implements IUserInteractor {
       const isEmailExist = await this.repository.findOne(userData.email);
 
       if (isEmailExist) {
-        let registerStatus = false;
+        const registerStatus = false;
 
         return registerStatus;
       }
-      let activationToken = generateToken(userData);
-      let registerStatus = true;
-      let options = {
+      const activationToken = generateToken(userData);
+      const registerStatus = true;
+      const options = {
         email: userData.email,
         otp: activationToken.activationCode,
       };
@@ -128,13 +128,13 @@ export class UserInteractor implements IUserInteractor {
       }
 
       const activationToken = loginToken(user.id);
-      let loginStatus: boolean = true;
+      const loginStatus: boolean = true;
       console.log(activationToken,"]]]]]]]]]]]]]]]]]]]]]]")
       const response = { msg: "Login successful", status: 201, activationToken , loginStatus };
 
       return response;
     } catch (err: any) {
-      let loginStatus: boolean = false;
+      const loginStatus: boolean = false;
       const response = { msg: "Login Failed", status: 201, loginStatus };
       return response;
     }

@@ -7,6 +7,5 @@ export class User{
         public readonly courses?:Array<{ courseId: string}>,
         public password?: string,
         public readonly _id ?:string
-
     ){}
 }

@@ -138,7 +138,6 @@ export class UserController {
   onGetAllUsers: any = async (call: any, callback: any) => {
     try {
       const response = await this.interactor.getAllUsers();
-      console.log(response, "contr resssssssssssssssssssss");
     
       if (response && response.length > 0) {
         const users = response
@@ -158,7 +157,7 @@ export class UserController {
       const {id,isVerified} = call.request 
       console.log(call.request, "0000000000000000000000",isVerified)
       const response = await this.interactor.blockUnblockUser(id,isVerified);
-      console.log(response, "contr ressssssssssssssssssss");
+      console.log(response, "contr resssssssssssssssssss222222s");
     
       if (response) {
         
