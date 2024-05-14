@@ -14,6 +14,21 @@ export class UserInteractor implements IUserInteractor {
   constructor(repository: IUserRepository) {
     this.repository = repository;
   }
+   async getUserDetails(userId: string): Promise<User |any> {
+    try {
+      const response = await this.repository.userDetails(userId)
+  
+      if(response){
+        console.log("in intreaaaaaa", response)
+        return response
+      }else{
+      }
+     } catch (error) {
+      
+     }
+  }
+
+
   async blockUnblockUser(userId: string, isVerified: Boolean): Promise<Boolean | void> {
    try {
     console.log(isVerified,"7777777777777")

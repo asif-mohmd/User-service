@@ -7,6 +7,18 @@ import { User } from "../entities/user.entities";
 export class UserRepository implements IUserRepository {
 
 
+    async userDetails(userId: string): Promise<any> {
+        try {
+            console.log(userId,"repoooiiiiiiiiiiii")
+            const userDetails = await UserModel.findOne({_id:userId})
+            console.log("-------",userDetails,"=============")
+            return userDetails
+        } catch (error) {
+            
+        }
+    }
+
+
     async blockUnblock(userId: string, isVerified: Boolean): Promise<Boolean | any> {
         try {
             console.log("44444444444444444444444444",isVerified,"44444444444444444444444444444444444444")

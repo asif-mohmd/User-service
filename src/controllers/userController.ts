@@ -19,6 +19,33 @@ export class UserController {
     this.interactor = interactor;
   }
 
+  onGetUserDetails: any = async(call:any,callback:any)=>{
+    try {
+      const {userId} = call.request as {
+        userId: string;  
+      };
+      console.log(userId,"------------------")
+      const response = await this.interactor.getUserDetails(
+        userId,
+      );
+
+      if (response) {
+        console.log("controll pass updtaet",response);
+
+        callback(null, {
+          id:response._id,
+          name: response.name,
+          email: response.email,
+          courses: response.courses
+        });
+      } else {
+        callback(null, {
+          passwordUpdate: false,
+        });
+      }
+    } catch (err) {}
+  }
+
   onPasswordUpdate: any = async (call: any, callback: any) => {
     try {
       const request = call.request as {

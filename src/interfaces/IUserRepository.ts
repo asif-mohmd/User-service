@@ -13,5 +13,6 @@ export interface IUserRepository {
   getUsers():any;
 
   blockUnblock(userId:string,isVerified:Boolean):Promise<Boolean | any>
+  userDetails(userId:string):Promise<User | any>
 
 }

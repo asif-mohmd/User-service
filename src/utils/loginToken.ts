@@ -2,13 +2,13 @@ import jwt,{ Secret } from "jsonwebtoken";
 import "dotenv/config";
 
 
-  export const loginToken = (instructorId: string): string => {
+  export const loginToken = (userId: string): string => {
    
    
 
     const token = jwt.sign(
       {
-        instructorId
+        userId
       },
       process.env.JWT_SECRET as Secret,
       
