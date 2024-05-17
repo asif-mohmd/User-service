@@ -28,6 +28,7 @@ export interface IUserInteractor {
       getAllUsers():any;
       blockUnblockUser(userId:string,isVerified:Boolean):Promise<Boolean  | void>
       getUserDetails(userId:string):Promise<User | undefined>
+      createUserCourse(userId:string,courseId:string):Promise<any >
 
     }
     

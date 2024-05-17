@@ -14,5 +14,6 @@ export interface IUserRepository {
 
   blockUnblock(userId:string,isVerified:Boolean):Promise<Boolean | any>
   userDetails(userId:string):Promise<User | any>
+  createUserCourse(userId:string,courseId:string):Promise<any >
 
 }

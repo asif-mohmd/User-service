@@ -14,6 +14,19 @@ export class UserInteractor implements IUserInteractor {
   constructor(repository: IUserRepository) {
     this.repository = repository;
   }
+  async createUserCourse(userId: string, courseId: string): Promise<any> {
+    try {
+      const response = await this.repository.createUserCourse(userId,courseId)
+  
+      if(response){
+        console.log("in intreaaaaaa", response)
+        return response
+      }else{
+      }
+     } catch (error) {
+      
+     }
+  }
    async getUserDetails(userId: string): Promise<User |any> {
     try {
       const response = await this.repository.userDetails(userId)
@@ -144,8 +157,8 @@ export class UserInteractor implements IUserInteractor {
 
       const activationToken = loginToken(user.id);
       const loginStatus: boolean = true;
-      console.log(activationToken,"]]]]]]]]]]]]]]]]]]]]]]")
-      const response = { msg: "Login successful", status: 201, activationToken , loginStatus };
+      console.log(activationToken,"]]]]]]]]]ffffffffffffffffffffffffffffffffffffffffffffffffff]]]]]]]]]]]]]",user)
+      const response = { msg: "Login successful", status: 201, activationToken , loginStatus, user };
 
       return response;
     } catch (err: any) {

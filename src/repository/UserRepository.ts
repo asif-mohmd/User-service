@@ -5,6 +5,38 @@ import { User } from "../entities/user.entities";
 
 
 export class UserRepository implements IUserRepository {
+    async createUserCourse(userId: string, courseId: string): Promise<any> {
+        try {
+            // Find the user by userId
+            const userDetails = await UserModel.findById(userId);
+    
+            if (!userDetails) {
+                throw new Error("User not found");
+            }
+    
+            // Check if the course already exists in the courses array
+            const courseExists = userDetails.courses.includes(courseId);
+    
+            if (courseExists) {
+                return userDetails; // or throw an error if needed
+            }
+    
+            // Push the courseId into the courses array
+            userDetails.courses.push(courseId);
+    
+            // Save the updated user document
+            await userDetails.save();
+    
+            return userDetails;
+        } catch (error) {
+            console.error("Error adding course to user:", error);
+            throw error;
+        }
+    }
+    
+    
+
+    
 
 
     async userDetails(userId: string): Promise<any> {

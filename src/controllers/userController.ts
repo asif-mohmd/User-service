@@ -19,6 +19,23 @@ export class UserController {
     this.interactor = interactor;
   }
 
+  onCreateUserCourse: any = async(call:any,callback:any)=>{
+    try{
+      const {userId, courseId} = call.request as {
+        userId: string;  
+        courseId : string;
+      };
+      console.log(userId,courseId,"controllllllllllllll userrrrrrrrrrrrrrrr")
+      const response = await this.interactor.createUserCourse(
+        userId,
+        courseId
+      );
+
+    }catch(err){
+
+    }
+  }
+
   onGetUserDetails: any = async(call:any,callback:any)=>{
     try {
       const {userId} = call.request as {
@@ -151,11 +168,16 @@ export class UserController {
         password: string;
       };
       const response = await this.interactor.userLogin(email, password);
+
+      console.log(response,"[[[[[[[[[]]]]]]]]]]]]]",response.user._id)
+      let userId = response.user._id.toString();
+console.log(userId)
       callback(null, {
         msg: response.msg,
         status: response.status,
         activationToken: response.activationToken,
-        loginStatus: response.loginStatus,
+        loginStatus: response.loginStatus, 
+        userId: response.user._id
       });
     } catch (error) {
       callback(error);

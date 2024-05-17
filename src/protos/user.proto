@@ -7,10 +7,21 @@ service UserService {
     rpc Login (LoginRequest) returns (LoginResponse) {};
     rpc ActivateUser (ActivateRequest) returns (ActivateResponse) {};
     rpc ForgotPassword (ForgotRequest) returns (ForgotResponse) {};
-    rpc PasswordUpdate(PasswordUpdateRequest) returns (PasswordUpdateResponse) {}
+    rpc PasswordUpdate(PasswordUpdateRequest) returns (PasswordUpdateResponse) {};
     rpc GetAllUsers (GetAllUsersRequest) returns (GetAllUsersResponse) {};
-    rpc UserBlockUnblock (BlockUnblockRequest) returns (BlockUnblockResponse) {}
+    rpc UserBlockUnblock (BlockUnblockRequest) returns (BlockUnblockResponse) {};
     rpc GetUserDetails (GetUserDetailsRequest) returns (GetUserDetailsResponse) {};
+    rpc CreateUserCourse(CreateUserCourseRequest) returns (CreateUserCourseResponse) {};
+}
+
+
+message CreateUserCourseRequest{
+    string courseId = 1;
+    string userId = 2;
+}
+
+message CreateUserCourseResponse{
+    
 }
 
 message GetUserDetailsRequest{
@@ -93,7 +104,7 @@ message LoginResponse{
     int32 status = 2;
     string activationToken = 3;
     bool loginStatus = 4;
-
+    string userId = 5;
 
 }
 
