@@ -21,7 +21,7 @@ export class UserRepository implements IUserRepository {
                 return userDetails; // or throw an error if needed
             }
     
-            // Push the courseId into the courses array
+            // Push the courseId into the courses array 
             userDetails.courses.push(courseId);
     
             // Save the updated user document

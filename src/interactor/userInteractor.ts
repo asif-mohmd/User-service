@@ -148,13 +148,13 @@ export class UserInteractor implements IUserInteractor {
       if (!user) {
         return { msg: "Login failed", status: 401 };
       }
-
+console.log("intraaaaaaaaaaaaaaadd",password)
       const isPasswordValid = await user.comparePassword(password);
-
+console.log(isPasswordValid)
       if (!isPasswordValid) {
         throw new Error("Invalid password");
       }
-
+console.log("dklfjsdalkfjalsdjf")
       const activationToken = loginToken(user.id);
       const loginStatus: boolean = true;
       console.log(activationToken,"]]]]]]]]]ffffffffffffffffffffffffffffffffffffffffffffffffff]]]]]]]]]]]]]",user)

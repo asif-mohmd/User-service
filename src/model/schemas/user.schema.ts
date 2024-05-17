@@ -14,7 +14,7 @@ export interface IUser extends Document {
   };
   role: "User";
   isVerified: boolean;
-  courses: string[]; 
+  courses: Array<{ courseId: string }>;
   comparePassword: (password: string) => Promise<boolean>;
   // SignAccessToken: () => string;
   // SignRefreshToken: () => string;
@@ -26,6 +26,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
       type: String,
       required: [true, "Please enter your first name"],
     },
+    
     email: {
       type: String,
       required: [true, "Please enter your email"],
@@ -37,24 +38,26 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
       },
       unique: true,
     },
+
     password: {
       type: String,
     },
+
     isVerified: {
       type: Boolean,
       default: false,
-    },
-    courses: {
-      type: [String], // Array of strings
-      default: [], // Default empty array
-    },
+    }, 
+
+    courses: [
+      {
+        courseId: String,
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
-
-
 
 // Hash password
 userSchema.pre<IUser>("save", async function (next) {

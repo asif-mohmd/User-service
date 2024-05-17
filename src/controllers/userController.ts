@@ -161,7 +161,6 @@ export class UserController {
   };
 
   onLogin: any = async (call: any, callback: any) => {
-    console.log(call,"------============----------------------")
     try {
       const { email, password } = call.request as {
         email: string;
