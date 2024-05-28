@@ -5,6 +5,25 @@ import { User } from "../entities/user.entities";
 
 
 export class UserRepository implements IUserRepository {
+    async uploadAvatar(userId:string,avatarURL: string): Promise<any> {
+        try {
+            let user = await UserModel.findOne({ _id: userId })
+            console.log(user,"ivdeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            if (user) {
+
+                user.avatar = avatarURL;
+                await user.save();
+                console.log('updated password');
+
+                return { success: true }
+            }
+            else {
+                return { success: false }
+            }
+        } catch (error) {
+            throw new Error("Error updating password");
+        } 
+        }
     async createUserCourse(userId: string, courseId: string): Promise<any> {
         try {
             // Find the user by userId
@@ -13,21 +32,13 @@ export class UserRepository implements IUserRepository {
             if (!userDetails) {
                 throw new Error("User not found");
             }
-    
-            // Check if the course already exists in the courses array
-            const courseExists = userDetails.courses.includes(courseId);
-    
-            if (courseExists) {
-                return userDetails; // or throw an error if needed
-            }
-    
-            // Push the courseId into the courses array 
-            userDetails.courses.push(courseId);
+
+            const update = await UserModel.updateOne({_id:userId},{$addToSet:{courses:courseId}})
     
             // Save the updated user document
-            await userDetails.save();
+       console.log(update,"newupppppppppppppppppp")
     
-            return userDetails;
+            return update;
         } catch (error) {
             console.error("Error adding course to user:", error);
             throw error;
@@ -36,7 +47,7 @@ export class UserRepository implements IUserRepository {
     
     
 
-    
+
 
 
     async userDetails(userId: string): Promise<any> {
@@ -72,15 +83,26 @@ export class UserRepository implements IUserRepository {
 
     async updateOne(email: string, password: string): Promise<any> {
         try {
-            const result = await UserModel.updateOne({ email: email }, { $set: { password: password } });
-            return result;
+            let user = await UserModel.findOne({ email: email })
+            console.log(user,"ivdeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            if (user) {
+
+                user.password = password;
+                await user.save();
+                console.log('updated password');
+
+                return { success: true }
+            }
+            else {
+                return { success: false }
+            }
         } catch (error) {
             throw new Error("Error updating password");
-        }
+        } 
     }
-
-
-
+ 
+ 
+ 
     register(userData: User): Promise<IUser | null> {
         console.log(userData, "repository........................")
         try {

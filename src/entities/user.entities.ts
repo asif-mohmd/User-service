@@ -5,6 +5,7 @@ export class User{
         public readonly name : string,
         public readonly isVerified : boolean,
         public readonly courses?:Array<{ courseId: string}>,
+        public readonly avatar? :string,
         public password?: string,
         public readonly _id ?:string
     ){}

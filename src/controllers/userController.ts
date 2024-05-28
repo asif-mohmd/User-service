@@ -33,7 +33,7 @@ export class UserController {
 
     }catch(err){
 
-    }
+    } 
   }
 
   onGetUserDetails: any = async(call:any,callback:any)=>{
@@ -53,7 +53,8 @@ export class UserController {
           id:response._id,
           name: response.name,
           email: response.email,
-          courses: response.courses
+          courses: response.courses,
+          avatar: response.avatar
         });
       } else {
         callback(null, {
@@ -137,7 +138,7 @@ export class UserController {
       callback(error);
     }
   };
-
+ 
   onActivateUser: any = async (call: any, callback: any) => {
     try {
       const request = call.request as {
@@ -169,8 +170,8 @@ export class UserController {
       const response = await this.interactor.userLogin(email, password);
 
       console.log(response,"[[[[[[[[[]]]]]]]]]]]]]",response.user._id)
-      let userId = response.user._id.toString();
-console.log(userId)
+
+
       callback(null, {
         msg: response.msg,
         status: response.status,
@@ -219,6 +220,29 @@ console.log(userId)
       callback(error);
     }
     
+  }
+
+  onAvatarURL: any = async (call: any, callback: any) => {
+    try{
+      console.log("hehrehrehrhehrehrherhehrherhehrhe")
+      console.log(call.request)
+      const {userId,avatarURL} = call.request
+
+      const response = await this.interactor.uploadAvatar(userId,avatarURL);
+      console.log(response,"ggggggggggg")
+      if (response) {
+        console.log(response,"pppppp")
+        
+        callback(null, 
+          {status : true}
+        );
+      } else {
+        callback(null, {status : false}); // Sending an empty array if there are no users
+      }
+
+    }catch(err){
+      
+    }
   }
 
   

@@ -14,6 +14,14 @@ export class UserInteractor implements IUserInteractor {
   constructor(repository: IUserRepository) {
     this.repository = repository;
   }
+ async uploadAvatar(userId:string,avatarURL: string): Promise<any> {
+    try {
+      return await this.repository.uploadAvatar(userId,avatarURL)
+    } catch (error) {
+    throw new Error("Method not implemented.");
+      
+    }
+  }
   async createUserCourse(userId: string, courseId: string): Promise<any> {
     try {
       const response = await this.repository.createUserCourse(userId,courseId)
@@ -74,12 +82,17 @@ export class UserInteractor implements IUserInteractor {
   async forgotPassword(email: string, password: string) {
     try {
       const isEmailExist = await this.repository.findOne(email);
+      console.log(isEmailExist,"---------------------",password)
+
+      const newPassword = password
 
       if (isEmailExist) {
         const forgotPasswordStatus = true;
         const email = isEmailExist.email;
-        const password = isEmailExist.password;
+        const password = newPassword
         const userData = { forgotPasswordStatus, email, password };
+
+        console.log(userData,"checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
 
         const activationToken = generateToken(userData);
         const  options = {
@@ -144,26 +157,35 @@ export class UserInteractor implements IUserInteractor {
 
   async userLogin(email: string, password: string) {
     try {
+      const loginStatus: boolean = false;
       const user: IUser | null = await this.repository.findOne(email);
       if (!user) {
-        return { msg: "Login failed", status: 401 };
+        const response ={ msg: "User not found", status: 401 ,loginStatus ,user};
+        return response;
       }
-console.log("intraaaaaaaaaaaaaaadd",password)
+      console.log(user,"userrrrrrrrrrrrrrrrrrrrrrr")
       const isPasswordValid = await user.comparePassword(password);
-console.log(isPasswordValid)
-      if (!isPasswordValid) {
-        throw new Error("Invalid password");
+      console.log(isPasswordValid,"aaaaa")
+      if (isPasswordValid == false) {
+        const response = { msg: "Incorrect password", status: 402 , loginStatus ,user };
+        return response;
       }
-console.log("dklfjsdalkfjalsdjf")
       const activationToken = loginToken(user.id);
-      const loginStatus: boolean = true;
-      console.log(activationToken,"]]]]]]]]]ffffffffffffffffffffffffffffffffffffffffffffffffff]]]]]]]]]]]]]",user)
-      const response = { msg: "Login successful", status: 201, activationToken , loginStatus, user };
+       
+      if(user.isVerified){
+       const loginStatus: boolean = true;
+        const response = { msg: "Login successful", status: 201, activationToken , loginStatus, user };
+        return response;
+      }else{
+        const response = { msg: "User blocked", status: 403, activationToken , loginStatus , user};
+        return response;
 
-      return response;
+      }
+
+     
     } catch (err: any) {
       const loginStatus: boolean = false;
-      const response = { msg: "Login Failed", status: 201, loginStatus };
+      const response = { msg: "Login Failed", status: 404, loginStatus };
       return response;
     }
   }

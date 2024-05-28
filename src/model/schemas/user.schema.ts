@@ -8,18 +8,15 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password?: string;
-  avatar: {
-    public_id: string;
-    url: string;
-  };
+  avatar?: string;
   role: "User";
   isVerified: boolean;
-  courses: Array<{ courseId: string }>;
+  courses: string[]; 
   comparePassword: (password: string) => Promise<boolean>;
   // SignAccessToken: () => string;
   // SignRefreshToken: () => string;
-}
-
+} 
+ 
 const userSchema: Schema<IUser> = new mongoose.Schema(
   {
     name: {
@@ -35,10 +32,10 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
           return emailRegex.test(value);
         },
         message: "Please enter a valid email.",
-      },
+      },  
       unique: true,
     },
-
+ 
     password: {
       type: String,
     },
@@ -46,13 +43,16 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     isVerified: {
       type: Boolean,
       default: false,
-    }, 
+    },
+    avatar:{
+      type: String,
 
-    courses: [
-      {
-        courseId: String,
-      },
-    ],
+    },
+
+    courses: {
+      type: [String], // Array of strings
+      default: [], // Default empty array
+    },
   },
   {
     timestamps: true,
@@ -97,3 +97,4 @@ userSchema.methods.comparePassword = async function (enteredPassword: string) {
 
 const UserModel: Model<IUser> = mongoose.model("User", userSchema);
 export default UserModel;
+

@@ -46,7 +46,8 @@ server.addService((userProto.UserService as any).service, {
   GetAllUsers : controller.onGetAllUsers.bind(controller),
   UserBlockUnblock : controller.onBlockUnblock.bind(controller),
   GetUserDetails : controller.onGetUserDetails.bind(controller),
-  CreateUserCourse : controller.onCreateUserCourse.bind(controller)
+  CreateUserCourse : controller.onCreateUserCourse.bind(controller),
+  AvatarURL : controller.onAvatarURL.bind(controller)
 
 
   // Implementation of service methods
