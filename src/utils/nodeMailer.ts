@@ -6,7 +6,6 @@ interface EmailOptions {
 }
 
 export const sendMail = async (options: EmailOptions) => {
-  console.log(options, "opt------------------------------------");
 
   const { email, otp } = options;
 

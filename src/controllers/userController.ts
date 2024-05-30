@@ -25,7 +25,6 @@ export class UserController {
         userId: string;  
         courseId : string;
       };
-      console.log(userId,courseId,"controllllllllllllll userrrrrrrrrrrrrrrr")
       const response = await this.interactor.createUserCourse(
         userId,
         courseId
@@ -41,13 +40,11 @@ export class UserController {
       const {userId} = call.request as {
         userId: string;  
       };
-      console.log(userId,"------------------")
       const response = await this.interactor.getUserDetails(
         userId,
       );
 
       if (response) {
-        console.log("controll pass updtaet",response);
 
         callback(null, {
           id:response._id,
@@ -76,7 +73,6 @@ export class UserController {
       );
 
       if (response) {
-        console.log("controll pass updtaet");
         callback(null, {
           passwordUpdate: true,
         });
@@ -169,7 +165,6 @@ export class UserController {
       };
       const response = await this.interactor.userLogin(email, password);
 
-      console.log(response,"[[[[[[[[[]]]]]]]]]]]]]",response.user._id)
 
 
       callback(null, {
@@ -204,9 +199,7 @@ export class UserController {
   onBlockUnblock: any = async (call: any, callback: any) => {
     try {
       const {id,isVerified} = call.request 
-      console.log(call.request, "0000000000000000000000",isVerified)
       const response = await this.interactor.blockUnblockUser(id,isVerified);
-      console.log(response, "contr resssssssssssssssssss222222s");
     
       if (response) {
         
