@@ -6,9 +6,15 @@ import { UserController } from "./controllers/userController";
 import { UserInteractor } from "./interactor/userInteractor";
 import { UserRepository } from "./repository/UserRepository";
 import { connectDB } from "./config/mongodb/db";
+import express, { Express } from "express";
+import healthCheckRouter from "./utils/healthcheck";
+const app: Express = express()
 
 dotenv.config();
 connectDB();
+
+app.use("/health", healthCheckRouter);
+
 
 const packageDefinition = protoLoader.loadSync(
   path.join(__dirname, "/protos/user.proto"),

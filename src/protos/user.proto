@@ -13,6 +13,7 @@ service UserService {
     rpc GetUserDetails (GetUserDetailsRequest) returns (GetUserDetailsResponse) {};
     rpc CreateUserCourse(CreateUserCourseRequest) returns (CreateUserCourseResponse) {};
     rpc AvatarURL(AvatarURLRequest) returns (AvatarURLResponse) {};
+    
 }
 
 message AvatarURLRequest {
@@ -45,7 +46,6 @@ message GetUserDetailsResponse{
     repeated string courses = 5;
     string avatar = 6;
 }
-
 
 
 message BlockUnblockRequest{

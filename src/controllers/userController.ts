@@ -163,6 +163,7 @@ export class UserController {
         email: string;
         password: string;
       };
+      console.log(email,"------",password)
       const response = await this.interactor.userLogin(email, password);
 
 
